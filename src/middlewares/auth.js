@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 const auth = (req, res, next) => {
   // 1. Get token from header
-  // Format is usually: "JWT <token>"
+  // Format is usually: "Authorization <token>"
   const token = req.header("Authorization")?.split(" ")[1];
 
   // 2. Check if token exists
