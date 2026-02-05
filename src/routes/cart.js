@@ -5,6 +5,31 @@ import auth from "../middlewares/auth.js"; // The gatekeeper
 
 const router = express.Router();
 
+// @route   GET /api/cart
+// @desc    returns list of cart items
+router.get("/", auth, async (req, res)=> {
+  try {
+    // Find the cart for this specific user
+    let cart = await Cart.findOne({ userId: req.user.id });
+    if (!cart) {
+      // if User has no cart yet -> Create one
+      cart = new Cart({
+        userId: req.user.id,
+        items: [],
+      });
+    }
+    await cart.save();
+    res.status(200).json(cart.items);
+    
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
+})
+
+
+
 // @route   POST /api/cart
 // @desc    Add item to cart
 router.post("/", auth, async (req, res) => {
