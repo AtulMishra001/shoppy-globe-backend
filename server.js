@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./src/config/db.js";
+import authRoutes from "./src/routes/auth.js";
 
 // Load environment variables
 dotenv.config();
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.json()); // Allow JSON data in requests
 app.use(cors());
+app.use("/api/auth", authRoutes);
 
 // Simple Test Route
 app.get("/", (req, res) => {
@@ -20,5 +22,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT} \nhttp://localhost:${PORT}`);
 });
